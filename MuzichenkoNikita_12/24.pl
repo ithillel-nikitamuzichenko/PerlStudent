@@ -5,16 +5,26 @@ use CGI::Session;
 use CGI::Cookie;
 use Storable;
 use LWP;
+my $login;
 my $query = new CGI;
 if ( param('ses') eq "" && param('next') eq '' ) {
 	print $query->redirect('start.pl');
 }
 my %hash = %{ retrieve('bd.txt') };
-if ( param('user') eq 'user' ) {
+if ( param('user') eq 'user' ) {$login=param('login') ;
 	foreach ( keys %hash ) {
-		if ( param('login') eq "$_" ) {
-			print $query->redirect('25.pl');
-			exit;
+		if ( $login eq "$_" ) {print $query->header, $query->start_html('mai');
+		print <<HTML;
+<body style="background:#CCFCFF">
+<form align=center>
+<h1 align=center>Login "$login" exists<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;exit
+
+
 		}
 	}
 	$hash{ param('login') } = [ param('pass'), 1, 1 ];
@@ -23,13 +33,32 @@ if ( param('user') eq 'user' ) {
 my $sid = param('id') || cookie('ID');
 my $session =
   CGI::Session->load( "driver:File", $sid, { Directory => "sessions" } );
-my $login = param('login') || $session->param('login');
+ $login = param('login') || $session->param('login');
 my $pass  = param('pass');
 my $index = '1';
 if ( param('ses') eq 'ses' ) {
-	if ( $pass ne @{ $hash{$login} }[0] || $login eq '' || $pass eq "" ) {
-		print $query->redirect('start.pl');
-		exit;
+	if ( $login eq '' || $pass eq "" ) {print $query->header, $query->start_html('mai2');
+		print <<HTML;
+<body style="background:#CCFCFF">
+<form align=center>
+<h1 align=center>Not all fields are filled<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;exit
+
+	}if ( $pass ne @{ $hash{$login} }[0] || $login eq '' || $pass eq "" ){print $query->header, $query->start_html('mai1');
+		print <<HTML;
+<body style="background:#CCFCFF">
+<form align=center>
+<h1 align=center>Not correct Login or password<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;exit
+
 	}
 }
 if ( param('next') ne '' ) {
@@ -73,7 +102,7 @@ if ( $response->content =~
 	  "  read  quote namber :      $index</h1><br><br><br>";
 	print "<h1><em>$+{key}</em></h1>";
 }
-if ( param('exit') eq 'exit' ) {
+if ( param('exit') eq 'exit' || $session->param('login') eq '') {
 	$session->delete;
 	$session->flush();
 	$query->redirect('start.pl');
