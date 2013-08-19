@@ -7,7 +7,7 @@ use Storable;
 use LWP;
 my $query = new CGI;
 if ( param('ses') eq "" && param('next') eq '' ) {
-	print $query->redirect('23.pl');
+	print $query->redirect('start.pl');
 }
 my %hash = %{ retrieve('bd.txt') };
 if ( param('user') eq 'user' ) {
@@ -28,7 +28,7 @@ my $pass  = param('pass');
 my $index = '1';
 if ( param('ses') eq 'ses' ) {
 	if ( $pass ne @{ $hash{$login} }[0] || $login eq '' || $pass eq "" ) {
-		print $query->redirect('23.pl');
+		print $query->redirect('start.pl');
 		exit;
 	}
 }
@@ -76,6 +76,6 @@ if ( $response->content =~
 if ( param('exit') eq 'exit' ) {
 	$session->delete;
 	$session->flush();
-	$query->redirect('23.pl');
+	$query->redirect('start.pl');
 	exit;
 }

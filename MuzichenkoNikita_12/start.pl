@@ -3,7 +3,7 @@ use strict;
 use CGI qw{:all};
 my $query = new CGI;
 print $query->header( -type => 'text/html', -charset => 'charset=cp1251' ),
-  $query->start_html('23');
+  $query->start_html('start');
 print <<HTML;
 <body style="background:#CCFCFF">
 <center><form action=24.pl method=post>

@@ -6,7 +6,7 @@ my $query=new CGI;
 print $query->header,$query->start_html('mail');
      print <<HTML;
 <body style="background:#CCFCFF">
-<form action=23.pl align=center>
+<form action=start.pl align=center>
 <h1 align=center>login exists! Try again!<h1>
 <center><input type=submit value=ok></center>
 
