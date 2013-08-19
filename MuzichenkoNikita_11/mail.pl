@@ -31,16 +31,33 @@ my $spam=$query->param('bot');
  my $mail=$query->param('mail');
 my $mess=param('mess');
 my $topic=$query->param('topic');
-if(($ok eq'' & $spam eq"boter")||($ok eq'not' & $spam eq'')){ print $query->header,$query->start_html('mail');
-     print <<HTML;
+if ( ( $ok eq '' & $spam eq "boter" ) || ( $ok eq 'not' & $spam eq '' ) ) {
+		print $query->header, $query->start_html('mail');
+		print <<HTML;
 <body style="background:#CCCCFF">
-<form>
-<h1 align=center> $ok $spam You SPAM BOT<h1></form>
+<form align=center>
+<h1 align=center> You SPAM BOT<h1>
+<center><input type=submit value=ok></center>
 
-
+</form>
 HTML
+		print $query->end_html;
+		exit;
+	}
 
-    print $query->end_html;exit}else{
+	if ( $mail eq '' || $spam eq '' || $mess eq '' ) {
+		print $query->header, $query->start_html('mai');
+		print <<HTML;
+<body style="background:#CCCCFF">
+<form align=center>
+<h1 align=center>Not all fields are filled<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;
+
+	}else{
      my $msg = MIME::Lite->new (
       From =>'student@perlstudent.tm.local',
        To =>"$mail",
