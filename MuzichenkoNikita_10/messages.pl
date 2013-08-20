@@ -12,7 +12,7 @@ if(!$query->param){
 <body style="background:#CCCFC9">
 <form action=messages.pl method=post>
 <h4>Name:</h4> <input type=text name=name><br>
-<h4>Message:</h4><textarea cols="80" rows="10" name=mess></textarea><br>
+<h4>Message:</h4><textarea cols="70" rows="10" name=mess></textarea><br>
 <input type=submit value=write><input type=reset value=Clear>
 </form>
 HTML
