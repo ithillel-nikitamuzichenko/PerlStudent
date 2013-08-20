@@ -1,5 +1,4 @@
 #!/usr/bin/perl -w
-
 use strict;
 use CGI qw{:all};
 
@@ -51,6 +50,18 @@ HTML
 <body style="background:#CCCCFF">
 <form align=center>
 <h1 align=center>Not all fields are filled<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;
+
+	};if ( $mail !~ /.*\@.*/g ) {
+		print $query->header, $query->start_html('ma');
+		print <<HTML;
+<body style="background:#CCCCFF">
+<form align=center>
+<h1 align=center>Not correct "$mail" mail<h1>
 <center><input type=submit value=ok></center>
 
 </form>
