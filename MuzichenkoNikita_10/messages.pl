@@ -23,7 +23,7 @@ HTML
 
 if($el[$i]=~/(7777)/){ @arr=split(/7777/,$el[$i]);
 
-print "<font color=\"green\">autor :</font> $arr[1] </br>";$count=$arr[0];next
+print "<br><font color=\"green\">autor :</font> $arr[1] </br>";$count=$arr[0];next
 };
         print " <font size=\"4\"><kbd>$el[$i]<br></kbd></font>";
     }
@@ -36,9 +36,9 @@ print "<font color=\"green\">autor :</font> $arr[1] </br>";$count=$arr[0];next
     
     flock(GB_DAT,2)|| die("Can not lock  file: - $databace - $databace");
 #$count=$count+1;
-    my $message=$query->param('mess');
+   my @message = reverse(split(/\n/,$query->param('mess')));
 my $name=$query->param('name');unless($name){$name="Guest"};
-    print GB_DAT "$message ","\n";
+    foreach (@message){print GB_DAT "$_\n"};
     print GB_DAT "$count","7777",$name," ",(localtime)[5] + 1900,'.',(localtime)[4] + 1,'.',(localtime)[3],'  ',(localtime)[2],":",(localtime)[1],"\n";
     close(GB_DAT);
     print $query->redirect('messages.pl');
