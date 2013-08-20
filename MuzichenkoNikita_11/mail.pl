@@ -17,7 +17,7 @@ if($random>5){$ne='';$check='checked'};
 <INPUT type=HIDDEN name=ok value=$ne>
 <h4>Mail:</h4><input type=text name=mail><br>
 <h4>Topic:</h4> <input type=text name=topic><br>
-<h4>Message:</h4><textarea cols="100" rows="10" name=mess></textarea><br>
+<h4>Message:</h4><textarea cols="70" rows="10" name=mess></textarea><br>
 <input type=submit value=write><input type=reset value=Clear>
 <input  type="checkbox"  name="bot" value="boter" $check>i am $ne spam bot!
 </form>
