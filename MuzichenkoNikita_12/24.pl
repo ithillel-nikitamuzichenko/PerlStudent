@@ -101,7 +101,7 @@ if ( $response->content =~
 	print "<h1>", $session->param('login'),
 	  "  read  quote namber :      $index</h1><br><br><br>";
 	print "<h1><em>$+{key}</em></h1>";
-}
+}else{ die(print"Can not open $url ")}
 if ( param('exit') eq 'exit' || $session->param('login') eq '') {
 	$session->delete;
 	$session->flush();
