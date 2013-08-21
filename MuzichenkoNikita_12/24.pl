@@ -6,6 +6,7 @@ use CGI::Cookie;
 use Storable;
 use LWP;
 my $login;
+my $sid;
 my $query = new CGI;
 if ( param('ses') eq "" && param('next') eq '' ) {
 	print $query->redirect('start.pl');
@@ -29,8 +30,8 @@ HTML
 	}
 	$hash{ param('login') } = [ param('pass'), 1, 1 ];
 	store \%hash, 'bd.txt';
-}
-my $sid = param('id') || cookie('ID');
+}if(param('session') eq 'hidden'){
+$sid = param('id')} else{ $sid=cookie('ID')};
 my $session =
   CGI::Session->load( "driver:File", $sid, { Directory => "sessions" } );
  $login = param('login') || $session->param('login');
@@ -89,6 +90,7 @@ print <<HTML;
 <input type=submit name=next value=next>
 <input type=submit name=exit value=exit>
 <INPUT type=HIDDEN name=id value=$sid>
+<INPUT type=HIDDEN name=session value=param('session')>
 </form>
 HTML
 print $query->end_html;
