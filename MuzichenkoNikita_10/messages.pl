@@ -37,7 +37,20 @@ print "<br><font color=\"green\">autor :</font> $arr[1] </br>";$count=$arr[0];ne
     flock(GB_DAT,2)|| die("Can not lock  file: - $databace - $databace");
 #$count=$count+1;
    my @message = reverse(split(/\n/,$query->param('mess')));
-my $name=$query->param('name');unless($name){$name="Guest"};
+my $name=$query->param('name');
+if(length($name) > 50){ print $query->header, $query->start_html('mai1');
+		print <<HTML;
+<body style="background:#CCCFC9"">
+<form align=center>
+<h1 align=center>Name very  long!!!!<h1>
+<center><input type=submit value=ok></center>
+
+</form>
+HTML
+		print $query->end_html;exit
+
+	};
+unless($name){$name="Guest"};
     foreach (@message){print GB_DAT "$_\n"};
     print GB_DAT "$count","7777",$name," ",(localtime)[5] + 1900,'.',(localtime)[4] + 1,'.',(localtime)[3],'  ',(localtime)[2],":",(localtime)[1],"\n";
     close(GB_DAT);
