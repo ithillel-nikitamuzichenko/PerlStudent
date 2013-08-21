@@ -30,6 +30,7 @@ my $spam=$query->param('bot');
  my $mail=$query->param('mail');
 my $mess=param('mess');
 my $topic=$query->param('topic');
+
 if ( ( $ok eq '' & $spam eq "boter" ) || ( $ok eq 'not' & $spam eq '' ) ) {
 		print $query->header, $query->start_html('mail');
 		print <<HTML;
@@ -63,8 +64,17 @@ HTML
 ;
 		exit;
 	}
+if($mail || $topic >200){print $query->header, $query->start_html('mai');
+		print <<HTML;
+<body style="background:#CCCCFF">
+<form align=center>
+<h1 align=center>Very long topic or mail!!!<h1>
+<center><input type=submit value=ok></center>
 
-	if ( $mail eq '' || $spam eq '' || $mess eq '' ) {
+</form>
+HTML
+		print $query->end_html;exit}
+	if ( $mail eq '' || $topic eq '' || $mess eq '' ) {
 		print $query->header, $query->start_html('mai');
 		print <<HTML;
 <body style="background:#CCCCFF">
@@ -74,7 +84,7 @@ HTML
 
 </form>
 HTML
-		print $query->end_html;
+		print $query->end_html;exit
 
 	};if ( $mail !~ /.*\@.*/g ) {
 		print $query->header, $query->start_html('ma');
