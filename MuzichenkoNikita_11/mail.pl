@@ -64,7 +64,7 @@ HTML
 ;
 		exit;
 	}
-if($mail || $topic >200){print $query->header, $query->start_html('mai');
+if($mail >200 || $topic >200){print $query->header, $query->start_html('mai');
 		print <<HTML;
 <body style="background:#CCCCFF">
 <form align=center>
